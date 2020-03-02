@@ -11,6 +11,6 @@ object Strings {
   }
 
   def main(args: Array[String]): Unit = {
-    println(strings("discombobulation", 5))
+
   }
 }
