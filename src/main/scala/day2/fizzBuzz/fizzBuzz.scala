@@ -11,6 +11,7 @@ object fizzBuzz {
       if (i % 5 == 0) {
         outputString += input2
       }
+
       if (i % 3 == 0 || i % 5 == 0) {
         println(outputString)
       }

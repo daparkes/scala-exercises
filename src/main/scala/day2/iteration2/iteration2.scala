@@ -7,6 +7,7 @@ object iteration2 {
     }
   }
 
+
   def main(args: Array[String]): Unit = {
     iteration2("H", 4)
   }
