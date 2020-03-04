@@ -17,8 +17,7 @@ object brokenKeyboard {
         }
       }
     )
-
-    filename.close
+    longestWord
   }
 
 }

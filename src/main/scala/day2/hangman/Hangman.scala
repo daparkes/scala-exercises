@@ -5,43 +5,117 @@ import scala.util.Random._
 
 object Hangman {
   def chooseWord: String = {
-    val filename = "enable1.txt"
-    val wordList = Source.fromFile(filename).getLines.toList
+    val file = "/home/dan/Documents/scala-exercises/src/main/scala/day2/hangman/enable1.txt"
+    val fileContents = Source.fromFile(file)
+    val wordList = fileContents.getLines.toList
     val randWord = wordList(nextInt(wordList.length))
+    fileContents.close
     randWord
   }
 
-  def drawUnderscores(randWord: String): String = {
-    var underscores = ""
-    for (letter <- randWord) {
-      underscores += "_"
+  def drawHangman(lives: Int): Unit = {
+    if (lives == 5) {
+      println(" |  | ")
     }
-    underscores
+    else if (lives == 4) {
+      println("______\n" +
+        " |  | ")
+    }
+    else if (lives == 3) {
+      println("   |    \n" +
+        "   |   \n" +
+        "______\n" +
+        "  |  | ")
+    }
+    else if (lives == 2) {
+      println("   |   \n" +
+        "   |   \n" +
+        "   |   \n" +
+        "   |   \n" +
+        "______\n" +
+        "  |  | ")
+    }
+    else if (lives == 2) {
+      println("   _____" +
+        "   |    \n" +
+        "   |    \n" +
+        "   |   \n" +
+        "   |   \n" +
+        "   |   \n" +
+        "______ \n" +
+        "  |  | ")
+    }
+    else if (lives == 1) {
+      println("   _____" +
+        "   |    |  \n" +
+        "   |    0  \n" +
+        "   |       \n" +
+        "   |       \n" +
+        "   |       \n" +
+        "______     \n" +
+        "  |  | ")
+    }
+    else {
+      println("   _____" +
+        "   |    |  \n" +
+        "   |    0  \n" +
+        "   |   /|\\ \n" +
+        "   |   /\\  \n" +
+        "   |        \n" +
+        "______      \n" +
+        "  |  | ")
+      println("Game over!")
+    }
   }
 
   def getInput: Char = {
     var letter = StdIn.readLine("Guess a letter: ")
-    var charLetter = letter.charAt(0)
+    var charLetter = letter(0)
     charLetter
   }
 
   def main(args: Array[String]): Unit = {
     val word = chooseWord
-    var storedWord = drawUnderscores(word)
-    while (true) {
+    var correctlyGuessedLetters = List()
+    var lives = 5
+    var currentGuess = ""
+    var continue = true
+
+    while (continue) {
       var playerGuess = getInput
       if (word.contains(playerGuess)) {
-        println("Correct!")
-        for (i <- 1 to word.length) {
-          if (word.charAt(i-1) == playerGuess) {
-            storedWord.charAt(i-1) =
+        println("That's correct!")
+        currentGuess += playerGuess
+        for (let <- word) {
+          for (guessedLet <- correctlyGuessedLetters) {
+            if (guessedLet == let) {
+              currentGuess += guessedLet
+              correctlyGuessedLetters :+ guessedLet
+            }
+            else {
+              currentGuess += "_"
+            }
           }
-          else {
-
-          }
+        }
+        println(currentGuess)
+      }
+      else {
+        println("Wrong!")
+        currentGuess += "_"
+        lives -= 1
+        drawHangman(lives)
+        if (lives == 0) {
+          continue = false
+          println("You fail")
         }
       }
     }
 
+    if (currentGuess.equals(word)) {
+      println("YOU WIN HOORAY")
+      continue = false
+    }
   }
 }
+
+
