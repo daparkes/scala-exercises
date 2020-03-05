@@ -73,7 +73,7 @@ object Hangman {
 
   def main(args: Array[String]): Unit = {
     val word = chooseWord
-    println(word)
+
     var correctlyGuessedLetters = ""
     var lives = 5
     var currentGuess = ""
