@@ -12,30 +12,25 @@ object Hangman {
     wordList(nextInt(wordList.length))
   }
 
-  def drawHangman(lives: Int): Unit = {
-    if (lives == 5) {
-      println(" |  | ")
-    }
-    else if (lives == 4) {
-      println("______\n" +
+  def drawHangman(lives: Int): Unit = lives match {
+    case 6 => println(" |  | ")
+
+    case 5 => println("______\n" +
         " |  | ")
-    }
-    else if (lives == 3) {
-      println("   |    \n" +
+
+    case 4 => println("   |    \n" +
         "   |   \n" +
         "______\n" +
         "  |  | ")
-    }
-    else if (lives == 2) {
-      println("   |   \n" +
+
+    case 3 => println("   |   \n" +
         "   |   \n" +
         "   |   \n" +
         "   |   \n" +
         "______\n" +
         "  |  | ")
-    }
-    else if (lives == 2) {
-      println("   _____" +
+
+    case 2 => println("   _____" +
         "   |    \n" +
         "   |    \n" +
         "   |   \n" +
@@ -43,9 +38,8 @@ object Hangman {
         "   |   \n" +
         "______ \n" +
         "  |  | ")
-    }
-    else if (lives == 1) {
-      println("   _____" +
+
+    case 1 => println("   _____" +
         "   |    |  \n" +
         "   |    0  \n" +
         "   |       \n" +
@@ -53,9 +47,8 @@ object Hangman {
         "   |       \n" +
         "______     \n" +
         "  |  | ")
-    }
-    else {
-      println("   _____" +
+
+    case _ => println("   _____" +
         "   |    |  \n" +
         "   |    0  \n" +
         "   |   /|\\ \n" +
@@ -63,7 +56,6 @@ object Hangman {
         "   |        \n" +
         "______      \n" +
         "  |  | ")
-    }
   }
 
   def getInput: Char = {
@@ -75,7 +67,7 @@ object Hangman {
     val word = chooseWord
 
     var correctlyGuessedLetters = ""
-    var lives = 5
+    var lives = 6
     var currentGuess = ""
     var continue = true
 

@@ -8,7 +8,15 @@ object patternMatching2 {
     case false => num1*num2
   }
 
+  def patternMatching3(input: Any):Unit = input match {
+    case input @ List(_,_) => println(input.reverse)
+    case input @ (_,_) => println(input.swap)
+    case input @ Array(_,_) => println(input(1) + "," + input(0))
+    case _ => println("failed")
+  }
+
   def main(args: Array[String]): Unit = {
     println(addOrMultiplyOr0(0, 5, add=false))
+    println(patternMatching3(Array(2, 3)))
   }
 }
