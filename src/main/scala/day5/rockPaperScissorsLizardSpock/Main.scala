@@ -10,69 +10,45 @@ object Main {
     input(0).toLower.toString
   }
 
-  def getChances(playerChoices: PlayerChoices): Array[Int] = {
-    Array(
-      playerChoices.choices.get("r").sum,
-      playerChoices.choices.get("p").sum,
-      playerChoices.choices.get("s").sum,
-      playerChoices.choices.get("l").sum,
-      playerChoices.choices.get("sp").sum,
-    )
-  }
-
-  def AIChooser(playerChoices: PlayerChoices): String = {
-    val total = playerChoices.choices.foldLeft(0)(_+_._2)
-    val randInt = nextInt(total)
-    val chances = getChances(playerChoices)
-
-    randInt match {
-      case randInt if randInt < chances(0) => "p"
-      case randInt if randInt < chances(0) + chances(1) => "s"
-      case randInt if randInt < chances(0) + chances(1) + chances(2) => "r"
-      case randInt if randInt < chances(0) + chances(1) + chances(2) + chances(3) => "s"
-      case randInt if randInt < chances(0) + chances(1) + chances(2) + chances(3) + chances(4) => "p"
-    }
-  }
-
-  def printAiChoice(AIChooser: String): Unit = AIChooser match {
-    case "p" => println("Computer chooses paper.")
-    case "r" => println("Computer chooses rock.")
-    case "s" => println("Computer chooses scissors.")
-  }
-
-  def playerWins(input: String, AIChoice: String): Boolean = {
+  def outcome(input: String, AIChoice: String): String = {
     input match {
       case "r" => AIChoice match {
-        case "p" | "sp" => false
-        case _ => true
+        case "p" | "sp" => "l"
+        case "r" => "d"
+        case _ => "w"
       }
       case "p" => AIChoice match {
-        case "s" | "l" => false
-        case _ => true
+        case "s" | "l" => "l"
+        case "p" => "d"
+        case _ => "w"
       }
       case "s" => AIChoice match {
-        case "r" | "sp" => false
-        case _ => true
+        case "r" | "sp" => "l"
+        case "s" => "d"
+        case _ => "w"
       }
       case "l" => AIChoice match {
-        case "s" | "r" => false
-        case _ => true
+        case "s" | "r" => "l"
+        case "l" => "d"
+        case _ => "w"
       }
       case "sp" => AIChoice match {
-        case "l" | "p" => false
-        case _ => true
+        case "l" | "p" => "l"
+        case "sp" => "d"
+        case _ => "w"
       }
       case _ => println("I didn't recognise that letter.")
-                false
+                "d"
     }
   }
 
   def main(args: Array[String]): Unit = {
     var playerChoices = new PlayerChoices
     var continue = true
+    val ai = new AI
 
     while (continue) {
-      val AIChoice = AIChooser(playerChoices)
+      val AIChoice = ai.AIChooser(playerChoices)
       val input = getInput
       var continueYN = ""
 
@@ -83,13 +59,17 @@ object Main {
         }
       )
 
-      if (!playerWins(input, AIChoice)) {
-        printAiChoice(AIChoice)
+      if (outcome(input, AIChoice) == "w") {
+        ai.printAiChoice(AIChoice)
         continueYN = StdIn.readLine("\nYou lose. Play again? (Y/N) ").toLowerCase
-      } else {
-        printAiChoice(AIChoice)
+      } else if (outcome(input, AIChoice) == "l") {
+        ai.printAiChoice(AIChoice)
         continueYN = StdIn.readLine("\nYou win! Play again? (Y/N) ").toLowerCase
-      }
+      } else {
+        ai.printAiChoice(AIChoice)
+        continueYN = StdIn.readLine("\nIt's a draw. Play again? (Y/N) ").toLowerCase
+        }
+
 
       if (continueYN == "n") {
         continue = false
