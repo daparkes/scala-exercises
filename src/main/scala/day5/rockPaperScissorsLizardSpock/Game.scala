@@ -1,13 +1,11 @@
 package day5.rockPaperScissorsLizardSpock
 
-import java.io.Console
-
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 import scala.io.StdIn
 
 class Game {
-  def singlePlayerGame(game: Game): Unit = {
+  def singlePlayerGame(): Unit = {
     val ai = new AI
     val player = new Player(1)
     val players = Array(player)
@@ -16,11 +14,11 @@ class Game {
 
     while (continue) {
       val AIChoice = ai.Chooser(player.choices)
-      val input = game.getInput
+      val input = getInput
 
       updateChoices(player, input)
 
-      val result = game.outcome(input, AIChoice)
+      val result = outcome(input, AIChoice)
       val continueYN = ai.winOrLose(result, AIChoice)
 
       if (continueYN == "n") {
@@ -29,7 +27,7 @@ class Game {
     }
   }
 
-  def twoPlayerGame(game: Game): Unit = {
+  def twoPlayerGame(): Unit = {
     val player = new Player(1)
     val player2 = new Player(2)
     val players = Array(player, player2)
@@ -41,7 +39,7 @@ class Game {
       for (player <- players) {
         plays +: getInput
       }
-      val continueYN = whoWins(game.outcome(plays(0), plays(1)))
+      val continueYN = whoWins(outcome(plays(0), plays(1)))
 
       if (continueYN == "n") {
         continue = false
@@ -69,8 +67,8 @@ class Game {
   }
 
   def getPlayers: Int = {
-    StdIn.readLine("How many players would like to play? (1 or 2) (2 players is pointless at the" +
-      "moment because player 2 can see what player 1 has typed").toInt
+    StdIn.readLine("How many players would like to play? (1 or 2) (2 players is pointless at the " +
+      "moment because player 2 can see what player 1 has typed): ").toInt
   }
 
   def outcome(input: String, input2: String): String = {
@@ -106,20 +104,17 @@ class Game {
   }
 
   def getInput: String = {
-    var input = ""
-    input = StdIn.readLine("Enter (R)ock, (P)aper, (S)cissors," +
-        "(L)izard or (Sp)ock: ")
-    val LCInput = input.toLowerCase
-    if (LCInput(0) == 's' && LCInput.length > 1) {
-      if (LCInput(1) == 'p') {
-        LCInput(0).toString + LCInput(1).toString
+    val input = StdIn.readLine(
+      "Enter (R)ock, (P)aper, (S)cissors, (L)izard or (Sp)ock: ")
+      .toLowerCase
+    if (input(0) == 's' && input.length > 1) {
+      if (input(1) == 'p') {
+        input(0).toString + input(1).toString
+      } else {
+        input(0).toString
       }
-      else {
-        LCInput(0).toString
-      }
-    }
-    else {
-      LCInput(0).toString
+    } else {
+      input(0).toString
     }
   }
 }

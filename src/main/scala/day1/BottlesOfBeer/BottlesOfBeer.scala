@@ -7,7 +7,6 @@ object BottlesOfBeer {
         println(s"$i bottles of beer on the wall, $i bottles of beer," +
           s" you take one down and pass it around, " + (i-1) + " bottles of beer on the wall")
       }
-
       else if (i == 1) {
         println("1 bottle of beer on the wall, 1 bottle of beer," +
           " you take one down and pass it around, no bottles of beer on the wall")

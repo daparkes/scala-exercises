@@ -6,7 +6,7 @@ object helloWorld {
 //  }
 
   def main(args: Array[String]): Unit = {
-    var helloWorld: String = "hello World!"
+    val helloWorld: String = "hello World!"
     println(helloWorld)
   }
 

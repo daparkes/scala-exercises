@@ -1,16 +1,13 @@
 package day1.strings
 
 object Strings {
-  def strings(inputString: String, number: Int): String = {
-    var newString = ""
-    var ary: Array[Char] = inputString.toCharArray
-    for (i: Int <- ary.length - number until ary.length) {
-      newString += ary(i)
+  def strings(inputString: String, number: Int): Unit = {
+    for (i: Int <- inputString.length - number until inputString.length) {
+      print(inputString(i))
     }
-    newString
   }
 
   def main(args: Array[String]): Unit = {
-
+    strings("hello", 3)
   }
 }

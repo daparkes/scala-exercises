@@ -9,9 +9,9 @@ object Main {
     val game = new Game
 
     if (game.getPlayers == 1) {
-      game.singlePlayerGame(game)
+      game.singlePlayerGame()
     } else {
-      game.twoPlayerGame(game)
+      game.twoPlayerGame()
     }
   }
 }

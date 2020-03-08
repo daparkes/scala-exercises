@@ -3,13 +3,13 @@ package day4.luhn
 object luhn {
   def checkDigit(number: Long) : Long = {
     var runningTotal: Long = 0
-    var numAsString = number.toString
+    val numAsString = number.toString
 
     for (i <- 0 until numAsString.length) {
       runningTotal += numAsString(i).toLong-48
     }
 
-    var check = (runningTotal*9) % 10
+    val check = (runningTotal*9) % 10
 
     (numAsString + check.toString).toLong
 
@@ -32,7 +32,7 @@ object luhn {
   }
 
   def checkIfValid(num: Long): Boolean = {
-    var numAsString = num.toString
+    val numAsString = num.toString
     var runningTotal: Long = addAlternateSumDigits(numAsString)
 
     for (i <- num.toString.length-1 to 0 by -2) {
