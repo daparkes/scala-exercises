@@ -1,20 +1,22 @@
 package day5.rockPaperScissorsLizardSpock
 
+import scala.collection.mutable
+import scala.io.StdIn
 import scala.util.Random.nextInt
 
 class AI {
-  def getChances(playerChoices: PlayerChoices): Array[Int] = {
+  def getChances(choices: mutable.Map[String, Int]): Array[Int] = {
     Array(
-      playerChoices.choices.get("r").sum,
-      playerChoices.choices.get("p").sum,
-      playerChoices.choices.get("s").sum,
-      playerChoices.choices.get("l").sum,
-      playerChoices.choices.get("sp").sum,
+      choices.get("r").sum,
+      choices.get("p").sum,
+      choices.get("s").sum,
+      choices.get("l").sum,
+      choices.get("sp").sum,
     )
   }
 
-  def AIChooser(playerChoices: PlayerChoices): String = {
-    val total = playerChoices.choices.foldLeft(0)(_+_._2)
+  def Chooser(playerChoices: mutable.Map[String, Int]): String = {
+    val total = playerChoices.foldLeft(0)(_+_._2)
     val randInt = nextInt(total)
     val chances = getChances(playerChoices)
 
@@ -31,5 +33,18 @@ class AI {
     case "p" => println("Computer chooses paper.")
     case "r" => println("Computer chooses rock.")
     case "s" => println("Computer chooses scissors.")
+  }
+
+  def winOrLose(result: String, AIChoice: String): String = {
+    if (result == "w") {
+      printAiChoice(AIChoice)
+      StdIn.readLine("\nYou win! Play again? (Y/N) ").toLowerCase
+    } else if (result == "l") {
+      printAiChoice(AIChoice)
+      StdIn.readLine("\nYou lose. Play again? (Y/N) ").toLowerCase
+    } else {
+      printAiChoice(AIChoice)
+      StdIn.readLine("\nIt's a draw. Play again? (Y/N) ").toLowerCase
+    }
   }
 }
