@@ -59,8 +59,7 @@ object Hangman {
   }
 
   def getInput: Char = {
-    var letter = StdIn.readLine("Guess a letter: ")
-    letter(0)
+    StdIn.readLine("Guess a letter: ")(0)
   }
 
   def main(args: Array[String]): Unit = {
