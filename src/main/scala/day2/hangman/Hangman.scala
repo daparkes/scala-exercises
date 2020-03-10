@@ -1,11 +1,12 @@
 package day2.hangman
 
+import scala.collection.mutable.ArrayBuffer
 import scala.io.{Source, StdIn}
 import scala.util.Random._
 
 object Hangman {
   def chooseWord: String = {
-    val file = "/home/dan/IdeaProjects/scala-exercises/src/main/scala/day2/hangman/enable1.txt"
+    val file = "enable1.txt"
     val fileContents = Source.fromFile(file)
     val wordList = fileContents.getLines.toList
     fileContents.close
@@ -30,7 +31,7 @@ object Hangman {
         "______\n" +
         "  |  | ")
 
-    case 2 => println("   _____" +
+    case 2 => println("   _____\n" +
         "   |    \n" +
         "   |    \n" +
         "   |   \n" +
@@ -39,7 +40,7 @@ object Hangman {
         "______ \n" +
         "  |  | ")
 
-    case 1 => println("   _____" +
+    case 1 => println("   _____\n" +
         "   |    |  \n" +
         "   |    0  \n" +
         "   |       \n" +
@@ -48,7 +49,7 @@ object Hangman {
         "______     \n" +
         "  |  | ")
 
-    case _ => println("   _____" +
+    case _ => println("   _____\n" +
         "   |    |  \n" +
         "   |    0  \n" +
         "   |   /|\\ \n" +
@@ -58,6 +59,18 @@ object Hangman {
         "  |  | ")
   }
 
+  def drawHangman(mistakes: ArrayBuffer[Int]): Unit = {
+    val hangman = Array(
+    "  |  | ",
+    "______      \n",
+    "   |        \n",
+    "   |   / \\  \n",
+    "   |   /|\\ \n",
+    "   |    0  \n",
+    "   |    |  \n",
+    "   _____\n")
+
+  }
   def getInput: Char = {
     StdIn.readLine("Guess a letter: ")(0)
   }
@@ -66,7 +79,7 @@ object Hangman {
     val word = chooseWord
 
     var correctlyGuessedLetters = ""
-    var lives = 6
+    var mistakes = ArrayBuffer[Int](0,0,0,0,0,0,0,0)
     var currentGuess = ""
     var continue = true
 
@@ -78,8 +91,8 @@ object Hangman {
         correctlyGuessedLetters += playerGuess
       } else {
         println("Wrong!")
-        lives -= 1
-        drawHangman(lives)
+        mistakes.remove(mistakes.length-1)
+        drawHangman(mistakes)
       }
 
       currentGuess = ""

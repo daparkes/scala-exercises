@@ -1,13 +1,15 @@
 package day1.strings
 
 object Strings {
-  def strings(inputString: String, number: Int): Unit = {
+  def strings(inputString: String, number: Int): String = {
+    var outputString = ""
     for (i: Int <- inputString.length - number until inputString.length) {
-      print(inputString(i))
+      outputString += inputString(i)
     }
+    outputString
   }
 
   def main(args: Array[String]): Unit = {
-    strings("hello", 3)
+    println(strings("hello", 3))
   }
 }

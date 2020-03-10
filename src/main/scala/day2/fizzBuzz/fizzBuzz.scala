@@ -1,21 +1,26 @@
 package day2.fizzBuzz
 
 object fizzBuzz {
-  def fizzBuzz(input1: String, input2: String, num: Int): Unit = {
+  def fizzBuzz(input1: String, input2: String, num: Int): String = {
+    var outputString = ""
     for (i <- 1 to num) {
       if (i % 3 != 0 && i % 5 != 0) {
-        print(i + ",")
+        outputString += i
       }
       if (i % 3 == 0) {
-        print(input1 + ",")
+        outputString += input1
       }
       if (i % 5 == 0) {
-        print(input2 + ",")
+        outputString += input2
+      }
+      if (i != num) {
+        outputString += ","
       }
     }
+    outputString
   }
 
   def main(args: Array[String]): Unit = {
-    fizzBuzz("Fizz", "Buzz", 15)
+    println(fizzBuzz("Fizz", "Buzz", 15))
   }
 }

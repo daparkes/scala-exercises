@@ -3,7 +3,7 @@ package day2.iteration
 object iteration {
   def iteration(input: String, int: Int): Unit = {
     for (i <- 1 to int) {
-      println(input)
+      input
     }
   }
 
