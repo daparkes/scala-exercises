@@ -13,63 +13,19 @@ object Hangman {
     wordList(nextInt(wordList.length))
   }
 
-  def drawHangman(lives: Int): Unit = lives match {
-    case 6 => println(" |  | ")
-
-    case 5 => println("______\n" +
-        " |  | ")
-
-    case 4 => println("   |    \n" +
-        "   |   \n" +
-        "______\n" +
-        "  |  | ")
-
-    case 3 => println("   |   \n" +
-        "   |   \n" +
-        "   |   \n" +
-        "   |   \n" +
-        "______\n" +
-        "  |  | ")
-
-    case 2 => println("   _____\n" +
-        "   |    \n" +
-        "   |    \n" +
-        "   |   \n" +
-        "   |   \n" +
-        "   |   \n" +
-        "______ \n" +
-        "  |  | ")
-
-    case 1 => println("   _____\n" +
-        "   |    |  \n" +
-        "   |    0  \n" +
-        "   |       \n" +
-        "   |       \n" +
-        "   |       \n" +
-        "______     \n" +
-        "  |  | ")
-
-    case _ => println("   _____\n" +
-        "   |    |  \n" +
-        "   |    0  \n" +
-        "   |   /|\\ \n" +
-        "   |   /\\  \n" +
-        "   |        \n" +
-        "______      \n" +
-        "  |  | ")
-  }
-
-  def drawHangman(mistakes: ArrayBuffer[Int]): Unit = {
+  def drawHangman(mistakes: Int): Unit = {
     val hangman = Array(
-    "  |  | ",
-    "______      \n",
-    "   |        \n",
-    "   |   / \\  \n",
-    "   |   /|\\ \n",
-    "   |    0  \n",
+      "   _____\n",
     "   |    |  \n",
-    "   _____\n")
-
+    "   |    0  \n",
+    "   |   /|\\ \n",
+    "   |   / \\  \n",
+    "   |        \n",
+    "______      \n",
+    "  |  | ")
+    for (i <- 0 to mistakes) {
+      println(hangman(i))
+    }
   }
   def getInput: Char = {
     StdIn.readLine("Guess a letter: ")(0)
@@ -79,7 +35,7 @@ object Hangman {
     val word = chooseWord
 
     var correctlyGuessedLetters = ""
-    var mistakes = ArrayBuffer[Int](0,0,0,0,0,0,0,0)
+    var mistakes = 0
     var currentGuess = ""
     var continue = true
 
@@ -91,7 +47,7 @@ object Hangman {
         correctlyGuessedLetters += playerGuess
       } else {
         println("Wrong!")
-        mistakes.remove(mistakes.length-1)
+        mistakes += 1
         drawHangman(mistakes)
       }
 
@@ -106,7 +62,7 @@ object Hangman {
 
       println(currentGuess)
 
-      if (lives == 0) {
+      if (mistakes == 7) {
         continue = false
         println("You fail")
       }
