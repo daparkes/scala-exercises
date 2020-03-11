@@ -15,20 +15,37 @@ object Hangman {
 
   def drawHangman(mistakes: Int): Unit = {
     val hangman = Array(
-      "   _____\n",
-    "   |    |  \n",
-    "   |    0  \n",
-    "   |   /|\\ \n",
+      "   _____   \n",
+    "   |    |    \n",
+    "   |    0    \n",
+    "   |   /|\\  \n",
     "   |   / \\  \n",
-    "   |        \n",
-    "______      \n",
+    "   |         \n",
+    "______       \n",
     "  |  | ")
-    for (i <- 0 to mistakes) {
-      println(hangman(i))
+    for (i <- hangman.length-mistakes until hangman.length) {
+      print(hangman(i))
     }
   }
-  def getInput: Char = {
-    StdIn.readLine("Guess a letter: ")(0)
+  def getInput: Option[Char] = {
+    try {
+      Some(StdIn.readLine("Guess a letter: ")(0))
+    } catch {
+      case e: StringIndexOutOfBoundsException => None
+    }
+  }
+
+  def buildCurrentGuess(word: String, correctlyGuessedLetters: String): String = {
+    var currentGuess = ""
+    println()
+    word.foreach(let =>
+      if (correctlyGuessedLetters.contains(let)){
+        currentGuess += let
+      } else {
+        currentGuess += "_"
+      }
+    )
+    currentGuess
   }
 
   def main(args: Array[String]): Unit = {
@@ -42,27 +59,20 @@ object Hangman {
     while (continue) {
 
       var playerGuess = getInput
-      if (word.contains(playerGuess)) {
-        println("That's correct!")
-        correctlyGuessedLetters += playerGuess
-      } else {
-        println("Wrong!")
-        mistakes += 1
-        drawHangman(mistakes)
+      if (playerGuess.isDefined) {
+        if (word.contains(playerGuess)) {
+          println("That's correct!")
+          correctlyGuessedLetters += playerGuess
+        } else {
+          println("Wrong!")
+          mistakes += 1
+          drawHangman(mistakes)
+        }
       }
 
-      currentGuess = ""
-      for (let <- word) {
-        if (correctlyGuessedLetters.contains(let)){
-          currentGuess += let
-        } else {
-          currentGuess += "_"
-          }
-        }
+      println(buildCurrentGuess(word, correctlyGuessedLetters))
 
-      println(currentGuess)
-
-      if (mistakes == 7) {
+      if (mistakes == 8) {
         continue = false
         println("You fail")
       }
