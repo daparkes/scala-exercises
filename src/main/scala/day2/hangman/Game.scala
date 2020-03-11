@@ -22,6 +22,7 @@ object Game {
       "   |         \n",
       "______       \n",
       "  |  | ")
+    println("\n")
     for (i <- hangman.length-mistakes until hangman.length) {
       print(hangman(i))
     }
@@ -56,7 +57,20 @@ object Game {
     wrongLetters.foreach(e =>
       print(s"$e ")
     )
-    println()
+    println("\n")
   }
 
+  def winOrFail(currentGuess: String, word: String, mistakes: Int): Unit = {
+    if (currentGuess.equals(word)) {
+      println("YOU WIN HOORAY")
+    }
+    if (mistakes == 8) {
+      println("You fail")
+    }
+  }
+
+  def playAgain: Boolean = {
+    val playAgain = StdIn.readLine("Play again? (Y/n)")
+    playAgain != "n"
+  }
 }
